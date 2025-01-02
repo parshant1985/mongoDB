@@ -1,6 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose');
-const User = require('./models/users')
+const User = require('./models/users');
+require('dotenv').config();
+const PORT = process.env.PORT || 3000;
+console.log(PORT)
 const app = express()
 app.use(express.json())
 app.get('/', (req, res)=> {
@@ -75,15 +78,17 @@ app.delete('/api/user/:id', async(req, res)=> {
     }
   
   })
-
-
-mongoose.connect('mongodb+srv://parshantconnect:n1QtcedBGV9PSzz1@userdetails.vd3h9.mongodb.net/myUsers?retryWrites=true&w=majority&appName=UserDetails')
+  const dbConnection  = process.env.DBHOST
+  mongoose.connect(dbConnection)
   .then(()=>{
     console.log('Connected!')
+    app.listen(3000);
    
-    app.listen(3000)
   }).catch(()=> {
 console.log('Connection failed')
   })
     
+ 
+  console.log(process.env.PORT)
+
   
